@@ -45,9 +45,9 @@ async function saveQuestion(q) {
     return new Promise((resolve, reject)=>{
       var tableName = process.env.DB_Name + ".question";
 
-      var d = new Date()
+      var d = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
-      var query = `INSERT INTO ${tableName} (QDate, QText) VALUES (${d}, ${q})  `
+      var query = `INSERT INTO ${tableName} (QDate, QText) VALUES (${d}, ${q});`
 
       connection.query(query,  (error, elements)=>{
             if(error){
