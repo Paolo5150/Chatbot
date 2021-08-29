@@ -58,7 +58,7 @@ async function saveQuestion(q) {
 
       var d = dateToMySQL()
 
-      var query = `INSERT INTO ${tableName} (QDate, QText) VALUES (${d}, ${q});`
+      var query = `INSERT INTO ${tableName} (QDate, QText) VALUES ('${d}', '${q}');`
 
       connection.query(query,  (error, elements)=>{
             if(error){
@@ -73,7 +73,7 @@ async function saveQuestion(q) {
   
   }
 
-  QueryTest()
+  //QueryTest()
 }
 
 async function chatProcess(projectId = 'chatty-sfjb', request, response) {
