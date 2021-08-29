@@ -92,17 +92,18 @@ async function chatProcess(projectId = 'chatty-sfjb', request, response) {
     const result = responses[0].queryResult;
     console.log(`  Query: ${result.queryText}`);
     console.log(`  Response: ${result.fulfillmentText}`);
-    response.send(result.fulfillmentText + "\n\n\nYour question has been saved, an answer will be updated (eventually...). Thanks!")
-    if (result.intent) {
-      console.log(`  Intent: ${result.intent.displayName}`);
-    } else {
-      console.log(`  No intent matched.`);
-    }
+
+    var reply  = result.fulfillmentText;
+    var feedback = "           Your question has been saved, and an answer will be updated (eventually...). Thanks!"
 
     if(result.intent.displayName === "Fallback")
     {
+      reply += feedback;
       saveQuestion(result.queryText)
     }
+
+    response.send(reply)
+
   }
 
 // This is the callback used when the user sends a message in
