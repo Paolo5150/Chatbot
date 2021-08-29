@@ -40,7 +40,8 @@ async function saveQuestion(q) {
   });
 
   console.log("Trying to save question: " + q)
-  SelectAllElements = () =>{
+
+  QueryTest = () =>{
     return new Promise((resolve, reject)=>{
       var tableName = process.env.DB_Name + ".question";
       connection.query(`SELECT * FROM ${tableName} `,  (error, elements)=>{
@@ -55,6 +56,8 @@ async function saveQuestion(q) {
     });
   
   }
+
+  QueryTest()
 }
 
 async function chatProcess(projectId = 'chatty-sfjb', request, response) {
@@ -82,7 +85,10 @@ async function chatProcess(projectId = 'chatty-sfjb', request, response) {
       console.log(`  No intent matched.`);
     }
 
-    saveQuestion(result.queryText)
+    if(result.intent.displayName != "Default Welcome Intent")
+    {
+      saveQuestion(result.queryText)
+    }
   }
 
 // This is the callback used when the user sends a message in
