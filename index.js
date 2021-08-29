@@ -102,6 +102,8 @@ async function chatProcess(projectId = 'chatty-sfjb', request, response) {
     if(result.intent.displayName === "Fallback")
     {
       saveQuestion(result.queryText)
+      response.send("Your question has been saved!")
+
     }
   }
 
