@@ -94,11 +94,9 @@ async function chatProcess(projectId = 'chatty-sfjb', request, response) {
     console.log(`  Response: ${result.fulfillmentText}`);
 
     var reply  = result.fulfillmentText;
-    var feedback = "           Your question has been saved, and an answer will be updated (eventually...). Thanks!"
 
     if(result.intent.displayName === "Fallback")
     {
-      reply += feedback;
       saveQuestion(result.queryText)
     }
 
