@@ -29,6 +29,30 @@ admin.initializeApp({
     databaseURL: "https://chatty-sfjb.firebaseio.com"
 })
 
+async function saveQuestion(q) {
+
+   //Save question
+   var connection = mysql.createPool({
+    host: process.env.DB_Host,
+    user: ocess.env.DB_User,
+    password: ocess.env.DB_P,
+    database: ocess.env.DB_Name
+  });
+
+  console.log("Trying to save question: " + q)
+  SelectAllElements = () =>{
+    return new Promise((resolve, reject)=>{
+      var tableName = process.env.DB_Name + ".question";
+      connection.query(`SELECT * FROM ${tableName} `,  (error, elements)=>{
+            if(error){
+                return reject("Error when executing query " + error);
+            }
+            return resolve(elements);
+        });
+    });
+  
+  }
+}
 
 async function chatProcess(projectId = 'chatty-sfjb', request, response) {
     // A unique identifier for the given session
@@ -44,26 +68,7 @@ async function chatProcess(projectId = 'chatty-sfjb', request, response) {
     // Send request and log result
     const responses = await sessionClient.detectIntent(req);
 
-    //Save question
-    var connection = mysql.createPool({
-      host: process.env.DB_Host,
-      user: ocess.env.DB_User,
-      password: ocess.env.DB_P,
-      database: ocess.env.DB_Name
-    });
-
-    SelectAllElements = () =>{
-      return new Promise((resolve, reject)=>{
-        var tableName = process.env.DB_Name + ".question";
-        connection.query(`SELECT * FROM ${tableName} `,  (error, elements)=>{
-              if(error){
-                  return reject("Error when executing query " + error);
-              }
-              return resolve(elements);
-          });
-      });
-    
-    }
+   
     const result = responses[0].queryResult;
     console.log(`  Query: ${result.queryText}`);
     console.log(`  Response: ${result.fulfillmentText}`);
@@ -73,6 +78,8 @@ async function chatProcess(projectId = 'chatty-sfjb', request, response) {
     } else {
       console.log(`  No intent matched.`);
     }
+
+    saveQuestion(result.queryText)
   }
 
 // This is the callback used when the user sends a message in
