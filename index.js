@@ -92,7 +92,7 @@ async function chatProcess(projectId = 'chatty-sfjb', request, response) {
     const result = responses[0].queryResult;
     console.log(`  Query: ${result.queryText}`);
     console.log(`  Response: ${result.fulfillmentText}`);
-    response.send(result.fulfillmentText)
+    response.send(result.fulfillmentText + "\n\n\nYour question has been saved, an answer will be updated (eventually...). Thanks!")
     if (result.intent) {
       console.log(`  Intent: ${result.intent.displayName}`);
     } else {
@@ -102,8 +102,6 @@ async function chatProcess(projectId = 'chatty-sfjb', request, response) {
     if(result.intent.displayName === "Fallback")
     {
       saveQuestion(result.queryText)
-      response.send("Your question has been saved!")
-
     }
   }
 
