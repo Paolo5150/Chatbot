@@ -8,11 +8,14 @@ const cors = require('cors');
 const dialogflow  = require('dialogflow');
 const mysql = require("mysql")
 const { response } = require("express");
+const Mailgun = require('mailgun-js')
 const app = express()
 
 app.use(bodyParser.json());
 app.use(cors())
 const port = process.env.PORT || 3000;
+
+var mailgun = new Mailgun({apiKey: process.env.MAILGUN_API_KEY, domain: process.env.MAILGUN_DOMAIN});
 
 var serviceAccount;
 if(process.env.NODE_ENV==='production')
@@ -71,7 +74,33 @@ async function saveQuestion(q) {
   
   }
 
+  SendEmail = () =>{
+    return new Promise((resolve, reject)=>{
+
+      var data = {
+        //Specify email data
+          from: 'Server',
+        //The email to contact
+          to: 'paoloferri5150@gmail.com',
+        //Subject and text data  
+          subject: 'New fallback!',
+          html: '<h1>New question asked!</h1> <h3>' + q +'</h3>'
+        }
+
+        mailgun.messages().send(data, function (err, body) {
+          //If there is an error, render the error page
+          if (err) {
+              console.log("Mailgun Error: ", err);
+              return reject("Mailgun Error: " + err);
+          }
+      });
+
+    });
+  
+  }
+
   SaveQuestion()
+  SendEmail()
 }
 
 async function chatProcess(projectId = 'chatty-sfjb', request, response) {

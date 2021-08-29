@@ -21,6 +21,7 @@
     "express": "^4.17.1",
     "firebase-admin": "^9.2.0",
     "firebase-functions": "^3.11.0",
+    "mailgun-js": "^0.22.0",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.6",
     "request": "^2.88.2"
