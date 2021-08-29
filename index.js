@@ -50,9 +50,7 @@ async function saveQuestion(q) {
     database: process.env.DB_Name
   });
 
-  console.log("Trying to save question: " + q)
-
-  QueryTest = () =>{
+  SaveQuestion = () =>{
     return new Promise((resolve, reject)=>{
       var tableName = process.env.DB_Name + ".question";
 
@@ -73,7 +71,7 @@ async function saveQuestion(q) {
   
   }
 
-  //QueryTest()
+  SaveQuestion()
 }
 
 async function chatProcess(projectId = 'chatty-sfjb', request, response) {
