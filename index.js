@@ -79,7 +79,7 @@ async function saveQuestion(q) {
 
       var data = {
         //Specify email data
-          from: 'Mailgun',
+          from: 'Mailgun <me@samples.mailgun.org>',
         //The email to contact
           to: 'paoloferri5150@gmail.com',
         //Subject and text data  
