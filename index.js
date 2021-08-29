@@ -45,24 +45,23 @@ async function chatProcess(projectId = 'chatty-sfjb', request, response) {
     const responses = await sessionClient.detectIntent(req);
 
     //Save question
-    /*var connection = mysql.createPool({
+    var connection = mysql.createPool({
       host: process.env.DB_Host,
       user: ocess.env.DB_User,
       password: ocess.env.DB_P,
       database: ocess.env.DB_Name
     });
 
-    connection.connect(function(err) {
-      if (err)
-      {
-        console.log("Error when connecting to database!");
-      }
-      else
-      {
-        console.log("Connected!");
-      }
-      
-    });*/
+    SelectAllElements = () =>{
+      return new Promise((resolve, reject)=>{
+        var tableName = process.env.DB_Name + ".question";
+        connection.query(`SELECT * FROM ${tableName} `,  (error, elements)=>{
+              if(error){
+                  return reject("Error when executing query " + error);
+              }
+              return resolve(elements);
+          });
+      });
     
     
     const result = responses[0].queryResult;
