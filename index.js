@@ -45,7 +45,7 @@ async function chatProcess(projectId = 'chatty-sfjb', request, response) {
     const responses = await sessionClient.detectIntent(req);
 
     //Save question
-    var connection = mysql.createPool({
+    /*var connection = mysql.createPool({
       host: process.env.DB_Host,
       user: ocess.env.DB_User,
       password: ocess.env.DB_P,
@@ -62,9 +62,9 @@ async function chatProcess(projectId = 'chatty-sfjb', request, response) {
         console.log("Connected!");
       }
       
-    });
+    });*/
     
-    console.log('Detected intent');
+    
     const result = responses[0].queryResult;
     console.log(`  Query: ${result.queryText}`);
     console.log(`  Response: ${result.fulfillmentText}`);
