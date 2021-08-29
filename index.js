@@ -6,6 +6,7 @@ const {WebhookClient} = require('dialogflow-fulfillment');
 const fs = require('fs');
 const cors = require('cors');
 const dialogflow  = require('dialogflow');
+const mysql = require("mysql")
 const { response } = require("express");
 const app = express()
 
@@ -29,7 +30,7 @@ admin.initializeApp({
 })
 
 
-async function runSample(projectId = 'chatty-sfjb', request, response) {
+async function chatProcess(projectId = 'chatty-sfjb', request, response) {
     // A unique identifier for the given session
     const sessionId = 'dasd'
   
@@ -43,6 +44,25 @@ async function runSample(projectId = 'chatty-sfjb', request, response) {
     // Send request and log result
     const responses = await sessionClient.detectIntent(req);
 
+    //Save question
+    var connection = mysql.createPool({
+      host: process.env.DB_Host,
+      user: ocess.env.DB_User,
+      password: ocess.env.DB_P,
+      database: ocess.env.DB_Name
+    });
+
+    connection.connect(function(err) {
+      if (err)
+      {
+        console.log("Error when connecting to database!");
+      }
+      else
+      {
+        console.log("Connected!");
+      }
+      
+    });
     
     console.log('Detected intent');
     const result = responses[0].queryResult;
@@ -58,7 +78,7 @@ async function runSample(projectId = 'chatty-sfjb', request, response) {
 
 // This is the callback used when the user sends a message in
 app.post('/dialogflow-in', (request, response) => {
- runSample('chatty-sfjb', request, response)
+ chatProcess('chatty-sfjb', request, response)
 
 })
 
@@ -86,7 +106,6 @@ app.post('/checking-in', (request, response) => {
  })
 
 app.listen(port, ()=>{
-    console.log('Db Name ' + process.env.DB_Name)
 
 })
 
