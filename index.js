@@ -93,6 +93,10 @@ async function saveQuestion(q) {
               console.log("Mailgun Error: ", err);
               return reject("Mailgun Error: " + err);
           }
+
+          console.log("Email OK!")
+
+          return resolve("Email OK!");
       });
 
     });
