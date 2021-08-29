@@ -29,6 +29,16 @@ admin.initializeApp({
     databaseURL: "https://chatty-sfjb.firebaseio.com"
 })
 
+function twoDigits(d) {
+  if(0 <= d && d < 10) return "0" + d.toString();
+  if(-10 < d && d < 0) return "-0" + (-1*d).toString();
+  return d.toString();
+}
+
+function dateToMySQL() {
+  return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) + " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
+}
+
 async function saveQuestion(q) {
 
    //Save question
@@ -45,7 +55,7 @@ async function saveQuestion(q) {
     return new Promise((resolve, reject)=>{
       var tableName = process.env.DB_Name + ".question";
 
-      var d = new Date().toISOString().slice(0, 19).replace('T', ' ');
+      var d = dateToMySQL()
 
       var query = `INSERT INTO ${tableName} (QDate, QText) VALUES (${d}, ${q});`
 
