@@ -63,7 +63,7 @@ async function chatProcess(projectId = 'chatty-sfjb', request, response) {
           });
       });
     
-    
+    }
     const result = responses[0].queryResult;
     console.log(`  Query: ${result.queryText}`);
     console.log(`  Response: ${result.fulfillmentText}`);
