@@ -44,7 +44,12 @@ async function saveQuestion(q) {
   QueryTest = () =>{
     return new Promise((resolve, reject)=>{
       var tableName = process.env.DB_Name + ".question";
-      connection.query(`SELECT * FROM ${tableName} `,  (error, elements)=>{
+
+      var d = new Date()
+
+      var query = `INSERT INTO ${tableName} (QDate, QText) VALUES (${d}, ${q})  `
+
+      connection.query(query,  (error, elements)=>{
             if(error){
                 console.log("Error when executing query " + error)
                 return reject("Error when executing query " + error);
