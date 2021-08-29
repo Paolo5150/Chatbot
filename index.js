@@ -99,7 +99,7 @@ async function chatProcess(projectId = 'chatty-sfjb', request, response) {
       console.log(`  No intent matched.`);
     }
 
-    if(result.intent.displayName != "Default Welcome Intent")
+    if(result.intent.displayName === "Fallback")
     {
       saveQuestion(result.queryText)
     }
