@@ -79,9 +79,9 @@ async function saveQuestion(q) {
 
       var data = {
         //Specify email data
-          from: process.env.MAILGUN_DOMAIN,
+          from: 'Excited User <me@samples.mailgun.org>
         //The email to contact
-          to: 'Excited User <me@samples.mailgun.org>',
+          to: 'paoloferri5150@gmail.com',
         //Subject and text data  
           subject: 'New fallback!',
           html: '<h1>New question asked!</h1> <h3>' + q +'</h3>'
