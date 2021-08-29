@@ -34,9 +34,9 @@ async function saveQuestion(q) {
    //Save question
    var connection = mysql.createPool({
     host: process.env.DB_Host,
-    user: ocess.env.DB_User,
-    password: ocess.env.DB_P,
-    database: ocess.env.DB_Name
+    user: process.env.DB_User,
+    password: process.env.DB_P,
+    database: process.env.DB_Name
   });
 
   console.log("Trying to save question: " + q)
@@ -45,8 +45,11 @@ async function saveQuestion(q) {
       var tableName = process.env.DB_Name + ".question";
       connection.query(`SELECT * FROM ${tableName} `,  (error, elements)=>{
             if(error){
+                console.log("Error when executing query " + error)
                 return reject("Error when executing query " + error);
             }
+            console.log("Query OK!")
+
             return resolve(elements);
         });
     });
