@@ -86,7 +86,7 @@ app.post('/checking-in', (request, response) => {
  })
 
 app.listen(port, ()=>{
-    console.log(`Listening to port ${port}`)
+    console.log('Db Name ' + process.env.DB_Name)
 
 })
 
